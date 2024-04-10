@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    const QanounSahlApp(),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const QanounSahlApp());
 }
 
 class QanounSahlApp extends StatelessWidget {
@@ -11,6 +10,9 @@ class QanounSahlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const MaterialApp(
+      title: 'Qanoun Sahl',
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
