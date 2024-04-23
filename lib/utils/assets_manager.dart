@@ -1,15 +1,17 @@
 class AssetsManager {
   static const String defaultIconsDirectory = "assets/icons";
   static const String defaultIcon = "default";
+  static const ImageType defaultIconType = ImageType.svg;
 
   static String iconify(
     String icon, {
     String directory = defaultIconsDirectory,
+    ImageType type = defaultIconType,
   }) {
     if (icon.isEmpty) {
-      return "$defaultIconsDirectory/$defaultIcon.svg";
+      return "$defaultIconsDirectory/$defaultIcon.${defaultIconType.name}";
     }
-    return "$directory/$icon.svg";
+    return "$directory/$icon.${type.name}";
   }
 
   static const String defaultImagesDirectory = "assets/images";
@@ -22,7 +24,7 @@ class AssetsManager {
     ImageType type = defaultImageType,
   }) {
     if (image.isEmpty) {
-      return "$defaultImagesDirectory/$defaultImage.$defaultImageType";
+      return "$defaultImagesDirectory/$defaultImage.${defaultImageType.name}";
     }
     return "$directory/$image.${type.name}";
   }
@@ -36,4 +38,4 @@ class AssetsManager {
   }
 }
 
-enum ImageType { png }
+enum ImageType { png, svg }
