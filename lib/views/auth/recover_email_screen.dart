@@ -1,26 +1,20 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
-import 'package:qanoun_sahl/views/auth/recover_email_screen.dart';
-import 'package:qanoun_sahl/views/auth/register_screen.dart';
+import 'package:qanoun_sahl/views/auth/login_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RecoverEmailScreen extends StatefulWidget {
+  const RecoverEmailScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RecoverEmailScreen> createState() => _RecoverEmailScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController(),
-      _passwordController = TextEditingController();
+class _RecoverEmailScreenState extends State<RecoverEmailScreen> {
+  final TextEditingController _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 135, 15, 100),
+              padding: const EdgeInsets.fromLTRB(15, 200, 15, 200),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 320,
                           alignment: Alignment.topRight,
                           child: const Text(
-                            "أدخل معلوماتك للمواصلة",
+                            "نسيت كلمة المرور؟ يمكنك تغييرها",
                             style: TextStyle(
                               fontSize: 16,
                             ),
@@ -79,7 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 88,
                           child: TextFormField(
                             controller: _emailController,
-                            textInputAction: TextInputAction.next,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "ملء هذا الحقل إجباري";
@@ -96,86 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: SvgPicture.asset(
-                                  AssetsManager.iconify("message"),
+                                  AssetsManager.iconify("profile"),
                                   color: QColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          width: 320,
-                          height: 88,
-                          child: TextFormField(
-                            controller: _passwordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "ملء هذا الحقل إجباري";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 20.0),
-                              labelText: "كلمة المرور",
-                              labelStyle: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: SvgPicture.asset(
-                                  AssetsManager.iconify("lock"),
-                                  color: QColors.primaryColor,
-                                ),
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(
-                                    showPassword
-                                        ? AssetsManager.iconify("hide")
-                                        : AssetsManager.iconify("show"),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            obscureText: showPassword,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 320,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RecoverEmailScreen(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "نسيت كلمة المرور؟",
-                                style: TextStyle(
-                                  color: QColors.primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 40,
+                          height: 20,
                           width: double.infinity,
                         ),
                         TextButton(
@@ -191,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Center(
                             child: Text(
-                              "تسجيل الدخول",
+                              "مواصلة",
                             ),
                           ),
                         ),
@@ -202,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "ليس لديك حساب؟ ",
+                        "تذكرت كلمة المرور؟ ",
                         style: TextStyle(
                           color: QColors.blackColor,
                           fontSize: 18,
@@ -214,12 +136,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
+                              builder: (context) => const LoginScreen(),
                             ),
                           );
                         },
                         child: const Text(
-                          "أنشء حسابا",
+                          "سجل الدخول",
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: QColors.primaryColor,
