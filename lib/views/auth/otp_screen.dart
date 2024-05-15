@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/auth/login_screen.dart';
-import 'package:qanoun_sahl/views/auth/otp_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class RecoverEmailScreen extends StatefulWidget {
-  const RecoverEmailScreen({super.key});
+class OTPScreen extends StatefulWidget {
+  const OTPScreen({super.key});
 
   @override
-  State<RecoverEmailScreen> createState() => _RecoverEmailScreenState();
+  State<OTPScreen> createState() => _OTPScreenState();
 }
 
-class _RecoverEmailScreenState extends State<RecoverEmailScreen> {
-  final TextEditingController _emailController = TextEditingController();
+class _OTPScreenState extends State<OTPScreen> {
+  final TextEditingController _otpController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -33,7 +32,7 @@ class _RecoverEmailScreenState extends State<RecoverEmailScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 200, 15, 200),
+              padding: const EdgeInsets.fromLTRB(15, 135, 15, 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,43 +61,88 @@ class _RecoverEmailScreenState extends State<RecoverEmailScreen> {
                           width: 320,
                           alignment: Alignment.topRight,
                           child: const Text(
-                            "نسيت كلمة المرور؟ يمكنك تغييرها",
+                            "تفقد بريدك الإلكتروني\nتم إرسال رمز يتكون من 4 أرقام إلى بريدك الإلكتروني",
                             style: TextStyle(
                               fontSize: 16,
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          width: 320,
-                          height: 88,
-                          child: TextFormField(
-                            controller: _emailController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "ملء هذا الحقل إجباري";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 20.0),
-                              labelText: "البريد الإلكتروني",
-                              labelStyle: const TextStyle(
-                                color: Colors.grey,
-                              ),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: SvgPicture.asset(
-                                  AssetsManager.iconify("profile"),
-                                  color: QColors.primaryColor,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 68,
+                              height: 88,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                textAlignVertical: TextAlignVertical.center,
+                                textInputAction: TextInputAction.next,
+                                maxLength: 1,
+                                decoration: const InputDecoration(
+                                  counterText: "",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 20.0),
                                 ),
                               ),
                             ),
-                          ),
+                            Container(
+                              width: 68,
+                              height: 88,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                textAlignVertical: TextAlignVertical.center,
+                                maxLength: 1,
+                                decoration: const InputDecoration(
+                                  counterText: "",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 20.0),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 68,
+                              height: 88,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                textAlignVertical: TextAlignVertical.center,
+                                maxLength: 1,
+                                decoration: const InputDecoration(
+                                  counterText: "",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 20.0),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 68,
+                              height: 88,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              child: TextFormField(
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                textAlignVertical: TextAlignVertical.center,
+                                maxLength: 1,
+                                decoration: const InputDecoration(
+                                  counterText: "",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 20.0),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 40,
                           width: double.infinity,
                         ),
                         TextButton(
@@ -107,7 +151,7 @@ class _RecoverEmailScreenState extends State<RecoverEmailScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const OTPScreen(),
+                                  builder: (context) => const Placeholder(),
                                 ),
                               );
                             }
