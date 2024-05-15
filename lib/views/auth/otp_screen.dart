@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/auth/login_screen.dart';
+import 'package:qanoun_sahl/views/auth/recover_password_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
 class OTPScreen extends StatefulWidget {
@@ -12,8 +13,6 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  final TextEditingController _otpController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -151,7 +150,8 @@ class _OTPScreenState extends State<OTPScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Placeholder(),
+                                  builder: (context) =>
+                                      const RecoverPasswordScreen(),
                                 ),
                               );
                             }
