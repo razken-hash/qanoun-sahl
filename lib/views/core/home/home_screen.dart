@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/core/drawer/q_drawer.dart';
+import 'package:qanoun_sahl/views/core/journal/journal_screen.dart';
+import 'package:qanoun_sahl/views/core/mahkama/mahkama_screen.dart';
+import 'package:qanoun_sahl/views/core/search/search_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 import 'package:qanoun_sahl/views/widgets/circle_button.dart';
+
+enum Functionality { Journal, GeneralSearch, Mahkama }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,66 +20,150 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double width = 20;
 
+  Functionality selectedFunctionality = Functionality.GeneralSearch;
+
+  PageController pageController = PageController(initialPage: 1);
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Expanded(
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 60, 20, 10),
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 8, 10),
-                        child: Row(
+        body: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 60, 20, 10),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 8, 10),
+                    child: Row(
+                      children: [
+                        CircleButton(
+                          icon: "menu",
+                          onTap: () {
+                            setState(() {
+                              width = 300;
+                            });
+                          },
+                        ),
+                        const Spacer(),
+                        const CircleButton(icon: "gpt"),
+                        const SizedBox(width: 10),
+                        const CircleButton(icon: "notification"),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 20,
+                    height: 90,
+                    child: Stack(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 20,
+                          height: 90,
+                          child: CustomPaint(
+                            painter: TopBarPainter(),
+                          ),
+                        ),
+                        Row(
                           children: [
-                            CircleButton(
-                              icon: "menu",
-                              onTap: () {
-                                setState(() {
-                                  width = 300;
-                                });
-                              },
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  pageController.animateToPage(0,
+                                      duration:
+                                          const Duration(milliseconds: 400),
+                                      curve: Curves.easeIn);
+                                },
+                                child: const Center(
+                                  child: Text(
+                                    "الجريدة الرسمية",
+                                    style: TextStyle(
+                                      color: QColors.whiteColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            const Spacer(),
-                            const CircleButton(icon: "gpt"),
-                            const SizedBox(width: 10),
-                            const CircleButton(icon: "notification"),
+                            SizedBox(
+                              width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    pageController.animateToPage(1,
+                                        duration:
+                                            const Duration(milliseconds: 400),
+                                        curve: Curves.easeIn);
+                                  },
+                                  child: SvgPicture.asset(
+                                    AssetsManager.iconify(
+                                      "search",
+                                    ),
+                                    color: QColors.whiteColor,
+                                    height: 30,
+                                    width: 40,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  pageController.animateToPage(2,
+                                      duration:
+                                          const Duration(milliseconds: 400),
+                                      curve: Curves.easeIn);
+                                },
+                                child: const Center(
+                                  child: Text(
+                                    "المحكمة العليا",
+                                    style: TextStyle(
+                                      color: QColors.whiteColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 20,
-                        height: 90,
-                        child: CustomPaint(
-                          painter: TopBarPainter(),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                  Expanded(
+                    child: PageView(
+                      controller: pageController,
+                      children: [
+                        JournalScreen(),
+                        GeneralSearchScreen(),
+                        MahkamaScreen(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (width > 20)
+              Expanded(
+                child: Container(
+                  color: QColors.blackColor.withOpacity(.2),
                 ),
               ),
-              if (width > 20)
-                Expanded(
-                  child: Container(
-                    color: QColors.blackColor.withOpacity(.2),
-                  ),
-                ),
-              QDrawer(
-                onClick: () {
-                  setState(() {
-                    width = 20;
-                  });
-                },
-                width: width,
-              )
-            ],
-          ),
+            QDrawer(
+              onClick: () {
+                setState(() {
+                  width = 20;
+                });
+              },
+              width: width,
+            )
+          ],
         ),
       ),
     );

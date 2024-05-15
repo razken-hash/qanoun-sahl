@@ -8,7 +8,7 @@ ThemeData lightTheme = ThemeData(
   fontFamily: "ElMessiri",
   primaryColor: QColors.primaryColor,
   inputDecorationTheme: const InputDecorationTheme(
-    contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+    contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 2.0,
