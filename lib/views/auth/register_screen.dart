@@ -1,21 +1,21 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
-import 'package:qanoun_sahl/views/auth/register_screen.dart';
+import 'package:qanoun_sahl/views/auth/login_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController(),
-      _passwordController = TextEditingController();
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _fullNameController = TextEditingController(),
+      _emailController = TextEditingController(),
+      _passwordController = TextEditingController(),
+      _confirmPasswordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 135, 15, 100),
+              padding: const EdgeInsets.fromLTRB(15, 135, 15, 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,13 +66,43 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 320,
                           alignment: Alignment.topRight,
                           child: const Text(
-                            "أدخل معلوماتك للمواصلة",
+                            "أول استعمال لك للتطبيق؟ أنشئ حساب",
                             style: TextStyle(
                               fontSize: 16,
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
+                        SizedBox(
+                          width: 320,
+                          height: 88,
+                          child: TextFormField(
+                            controller: _fullNameController,
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "ملء هذا الحقل إجباري";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 20.0),
+                              labelText: "الاسم الكامل",
+                              labelStyle: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                  AssetsManager.iconify("profile"),
+                                  color: QColors.primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           width: 320,
                           height: 88,
@@ -147,28 +177,39 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: showPassword,
                           ),
                         ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           width: 320,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Placeholder(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "نسيت كلمة المرور؟",
-                                style: TextStyle(
+                          height: 88,
+                          child: TextFormField(
+                            controller: _confirmPasswordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "ملء هذا الحقل إجباري";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 20.0),
+                              labelText: "تأكيد كلمة المرور",
+                              labelStyle: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                  AssetsManager.iconify("lock"),
                                   color: QColors.primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                    AssetsManager.iconify("hide")),
+                              ),
                             ),
+                            obscureText: true,
                           ),
                         ),
                         const SizedBox(
@@ -188,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Center(
                             child: Text(
-                              "تسجيل الدخول",
+                              "إنشاء حساب ",
                             ),
                           ),
                         ),
@@ -199,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "ليس لديك حساب؟ ",
+                        "لديك حساب؟ ",
                         style: TextStyle(
                           color: QColors.blackColor,
                           fontSize: 18,
@@ -211,12 +252,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
+                              builder: (context) => const LoginScreen(),
                             ),
                           );
                         },
                         child: const Text(
-                          "أنشء حسابا",
+                          "سجل الدخول",
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: QColors.primaryColor,
