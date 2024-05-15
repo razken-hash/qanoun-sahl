@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
+import 'package:qanoun_sahl/views/auth/login_screen.dart';
+import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -28,9 +30,10 @@ class OnBoardingScreen extends StatelessWidget {
           children: [
             SvgPicture.asset(
               AssetsManager.iconify(
-                "legal_eye",
+                "balance",
               ),
               height: 40,
+              color: QColors.whiteColor,
             ),
             const SizedBox(height: 65),
             const Text(
@@ -58,7 +61,7 @@ class OnBoardingScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Placeholder(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
