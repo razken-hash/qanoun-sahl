@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qanoun_sahl/views/core/home/home_screen.dart';
+import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
+import 'package:qanoun_sahl/views/core/notifications/notifications_screen.dart';
 import 'package:qanoun_sahl/views/on_boarding/on_boarding_screen.dart';
 import 'package:qanoun_sahl/views/themes/themes.dart';
 
@@ -17,7 +18,7 @@ class QanounSahlApp extends StatelessWidget {
       title: 'Qanoun Sahl',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const HomeScreen(),
+      home: const QanounSahlScreen(),
     );
   }
 }

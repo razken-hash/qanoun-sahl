@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
+import 'package:qanoun_sahl/views/core/home/home_screen.dart';
+import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
 class QDrawer extends StatefulWidget {
@@ -100,7 +102,15 @@ class _QDrawerState extends State<QDrawer> {
                   DrawerItem(
                     title: "الرئيسية",
                     icon: "home",
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const QanounSahlScreen(),
+                        ),
+                      );
+                    },
                   ),
                   const Divider(
                     color: QColors.whiteColor,
