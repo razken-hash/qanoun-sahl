@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qanoun_sahl/views/on_boarding/on_boarding_screen.dart';
+import 'package:qanoun_sahl/views/themes/themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,9 +12,11 @@ class QanounSahlApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Qanoun Sahl',
       debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      home: const OnBoardingScreen(),
     );
   }
 }
