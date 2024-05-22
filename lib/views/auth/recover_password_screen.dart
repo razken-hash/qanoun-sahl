@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/auth/login_screen.dart';
+import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
 class RecoverPasswordScreen extends StatefulWidget {
@@ -160,7 +161,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Placeholder(),
+                                  builder: (context) => const QanounSahlScreen(),
                                 ),
                               );
                             }

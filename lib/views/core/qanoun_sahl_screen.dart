@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qanoun_sahl/providers/navigation_provider.dart';
+import 'package:qanoun_sahl/views/core/chat/chat_screen.dart';
 import 'package:qanoun_sahl/views/core/drawer/q_drawer.dart';
 import 'package:qanoun_sahl/views/core/home/home_screen.dart';
+import 'package:qanoun_sahl/views/core/home/court/court_result_screen.dart';
 import 'package:qanoun_sahl/views/core/notifications/notifications_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 import 'package:qanoun_sahl/views/widgets/circle_button.dart';
@@ -15,67 +19,78 @@ class QanounSahlScreen extends StatefulWidget {
 class _QanounSahlScreenState extends State<QanounSahlScreen> {
   double width = 20;
 
-  Widget selectedScreen = const HomeScreen();
-
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 60, 20, 10),
-              child: Column(
+    return ChangeNotifierProvider(
+      create: (context) => NavigationProvider(),
+      child: Consumer<NavigationProvider>(
+          builder: (context, naviagtionProvider, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: SafeArea(
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 8, 10),
-                    child: Row(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+                    child: Column(
                       children: [
-                        CircleButton(
-                          icon: "menu",
-                          onTap: () {
-                            setState(() {
-                              width = 300;
-                            });
-                          },
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 5, 8, 10),
+                          child: Row(
+                            children: [
+                              CircleButton(
+                                icon: "menu",
+                                onTap: () {
+                                  setState(() {
+                                    width = 300;
+                                  });
+                                },
+                              ),
+                              const Spacer(),
+                              CircleButton(
+                                icon: "gpt",
+                                onTap: () {
+                                  naviagtionProvider
+                                      .saveAndGoto(const ChatScreen());
+                                },
+                              ),
+                              const SizedBox(width: 10),
+                              CircleButton(
+                                icon: "notification",
+                                onTap: () {
+                                  naviagtionProvider
+                                      .saveAndGoto(const NotificationsScreen());
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                        const Spacer(),
-                        const CircleButton(icon: "gpt"),
-                        const SizedBox(width: 10),
-                        CircleButton(
-                          icon: "notification",
-                          onTap: () {
-                            setState(() {
-                              selectedScreen = const NotificationsScreen();
-                            });
-                          },
-                        ),
+                        naviagtionProvider.selectedScreen,
                       ],
                     ),
                   ),
-                  selectedScreen,
+                  if (width > 20)
+                    Expanded(
+                      child: Container(
+                        color: QColors.blackColor.withOpacity(.2),
+                      ),
+                    ),
+                  QDrawer(
+                    onClick: () {
+                      setState(() {
+                        width = 20;
+                      });
+                    },
+                    width: width,
+                  )
                 ],
               ),
             ),
-            if (width > 20)
-              Expanded(
-                child: Container(
-                  color: QColors.blackColor.withOpacity(.2),
-                ),
-              ),
-            QDrawer(
-              onClick: () {
-                setState(() {
-                  width = 20;
-                });
-              },
-              width: width,
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
