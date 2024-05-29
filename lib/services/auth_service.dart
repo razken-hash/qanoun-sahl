@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:qanoun_sahl/consts.dart';
 import 'package:qanoun_sahl/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,8 @@ class AuthService {
           {"email": email, "password": password},
         ),
       );
+
+      log(response.body);
 
       switch (response.statusCode) {
         case 200:
@@ -56,6 +59,7 @@ class AuthService {
           },
         ),
       );
+      log(response.body);
 
       switch (response.statusCode) {
         case 201:
@@ -75,6 +79,8 @@ class AuthService {
           "Content-Type": "application/json",
         },
       );
+      log(response.body);
+
       switch (response.statusCode) {
         case 200:
           return true;
@@ -99,6 +105,7 @@ class AuthService {
           "Authorization": "Bearer $token",
         },
       );
+      log(response.body);
 
       switch (response.statusCode) {
         case 200:

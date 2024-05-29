@@ -15,100 +15,140 @@ class CourtResultScreen extends StatefulWidget {
 
 class _CourtResultScreenState extends State<CourtResultScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<NavigationProvider>(
       builder: (context, naviagtionProvider, child) {
         return Consumer<CourtProvider>(
-          builder: (context, mahkamaSearchProvider, child) {
+          builder: (context, courtProvider, child) {
             return Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 20.0, top: 10, left: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            naviagtionProvider.pop();
-                          },
-                          child: SvgPicture.asset(
-                            AssetsManager.iconify(
-                              "semi-arrow-right-square",
-                            ),
-                            color: QColors.primaryColor,
-                            height: 30,
-                            width: 40,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: 20.0, top: 10, left: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  naviagtionProvider.pop();
+                                },
+                                child: SvgPicture.asset(
+                                  AssetsManager.iconify(
+                                    "semi-arrow-right-square",
+                                  ),
+                                  color: QColors.primaryColor,
+                                  height: 30,
+                                  width: 40,
+                                ),
+                              ),
+                              const Text(
+                                "نتائج البحث",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              SvgPicture.asset(
+                                AssetsManager.iconify(
+                                  "search",
+                                ),
+                                color: QColors.primaryColor,
+                                height: 30,
+                                width: 40,
+                              ),
+                            ],
                           ),
                         ),
-                        const Text(
-                          "نتائج البحث",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                        ),
-                        SvgPicture.asset(
-                          AssetsManager.iconify(
-                            "search",
-                          ),
+                        const Divider(
+                          thickness: 5,
                           color: QColors.primaryColor,
                           height: 30,
-                          width: 40,
+                          indent: 20,
+                          endIndent: 20,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: courtProvider.scrollController,
+                            itemCount: courtProvider.allCourts.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < courtProvider.allCourts.length) {
+                                return Container(
+                                  padding: const EdgeInsets.all(15),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20),
+                                      topLeft: Radius.circular(5),
+                                      bottomRight: Radius.circular(5),
+                                    ),
+                                    color: QColors.primaryColor.withOpacity(.3),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        courtProvider
+                                            .allCourts[index].principle,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        courtProvider
+                                            .allCourts[index].groundAppeal,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              if (index == courtProvider.allCourts.length) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const Divider(
-                    thickness: 5,
-                    color: QColors.primaryColor,
-                    height: 30,
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                  Expanded(
-                    child: ListView.builder(itemBuilder: (context, index) {
-                      return Container(
-                        padding: const EdgeInsets.all(15),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
-                            topLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5),
-                          ),
-                          color: QColors.primaryColor.withOpacity(.3),
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              mahkamaSearchProvider.allCourts[index].principle,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: const BoxDecoration(
+                        color: QColors.primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      margin: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkWell(
+                        onTap: () {
+                          courtProvider.scrollController.animateTo(0,
+                              duration: const Duration(
+                                seconds: 2,
                               ),
-                            ),
-                            Text(
-                              mahkamaSearchProvider
-                                  .allCourts[index].groundAppeal,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
+                              curve: Curves.easeInOut);
+                        },
+                        child: SvgPicture.asset(
+                          AssetsManager.iconify("arrow-up"),
+                          color: QColors.whiteColor,
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -117,5 +157,11 @@ class _CourtResultScreenState extends State<CourtResultScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    Provider.of<CourtProvider>(context).dispose();
+    super.dispose();
   }
 }

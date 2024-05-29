@@ -23,9 +23,9 @@ class CourtService {
     final response = await http.get(Uri.parse(url), headers: {
       "Content-Type": "application/json",
     });
+    log(response.body);
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
-      log(decodedResponse);
       for (var item in decodedResponse['data']) {
         courts.add(Court.fromMap(item));
       }

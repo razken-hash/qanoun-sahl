@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
+import 'package:qanoun_sahl/views/core/home/journal/journal_provider.dart';
 import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
 import 'package:qanoun_sahl/views/core/home/journal/journal_screen.dart';
 import 'package:qanoun_sahl/views/core/home/court/court_screen.dart';

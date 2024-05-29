@@ -5,6 +5,7 @@ import 'package:qanoun_sahl/views/core/chat/chat_screen.dart';
 import 'package:qanoun_sahl/views/core/drawer/q_drawer.dart';
 import 'package:qanoun_sahl/views/core/home/home_screen.dart';
 import 'package:qanoun_sahl/views/core/home/court/court_result_screen.dart';
+import 'package:qanoun_sahl/views/core/home/journal/journal_provider.dart';
 import 'package:qanoun_sahl/views/core/notifications/notifications_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 import 'package:qanoun_sahl/views/widgets/circle_button.dart';
@@ -21,8 +22,12 @@ class _QanounSahlScreenState extends State<QanounSahlScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => NavigationProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<NavigationProvider>(
+          create: (context) => NavigationProvider(),
+        ),
+      ],
       child: Consumer<NavigationProvider>(
           builder: (context, naviagtionProvider, child) {
         return Directionality(

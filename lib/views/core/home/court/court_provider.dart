@@ -1,35 +1,37 @@
-import "dart:convert";
+import "dart:developer";
 
 import "package:flutter/material.dart";
-import "package:http/http.dart" as http;
 import 'package:qanoun_sahl/models/court.dart';
 import "package:qanoun_sahl/services/court_service.dart";
 
 class CourtProvider extends ChangeNotifier {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   int page = 1;
-  final int perPage = 1;
+  final int perPage = 10;
 
-  final String? searchQuery,
+  String? searchQuery,
       searchField,
       decisionSubject,
       startDate,
       endDate,
       decisionNumber;
 
+  void updateParams() {}
+
   CourtProvider({
-    this.searchQuery,
-    this.searchField,
-    this.decisionSubject,
-    this.startDate,
-    this.endDate,
-    this.decisionNumber,
+    String? searchQuery,
+    String? searchField,
+    String? decisionSubject,
+    String? startDate,
+    String? endDate,
+    String? decisionNumber,
   }) {
+    allCourts = [];
     getCourts(page: page++);
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         getCourts(page: page++);
       }
     });
@@ -50,6 +52,7 @@ class CourtProvider extends ChangeNotifier {
         decisionNumber: decisionNumber,
         perPage: perPage,
         page: page);
+    log(courts.toString());
     allCourts.addAll(courts);
     isLoading = false;
     notifyListeners();
