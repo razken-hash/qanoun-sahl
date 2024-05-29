@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:qanoun_sahl/models/court.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
+import 'package:qanoun_sahl/views/core/home/court/court_detail_screen.dart';
 import 'package:qanoun_sahl/views/core/home/court/court_provider.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
@@ -77,39 +79,15 @@ class _CourtResultScreenState extends State<CourtResultScreen> {
                             itemCount: courtProvider.allCourts.length + 1,
                             itemBuilder: (context, index) {
                               if (index < courtProvider.allCourts.length) {
-                                return Container(
-                                  padding: const EdgeInsets.all(15),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                      topLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5),
-                                    ),
-                                    color: QColors.primaryColor.withOpacity(.3),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        courtProvider
-                                            .allCourts[index].principle,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      Text(
-                                        courtProvider
-                                            .allCourts[index].groundAppeal,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                return InkWell(
+                                  onTap: () {
+                                    naviagtionProvider
+                                        .saveAndGoto(CourtDetailScreen(
+                                      court: courtProvider.allCourts[index],
+                                    ));
+                                  },
+                                  child: CourtCard(
+                                      court: courtProvider.allCourts[index]),
                                 );
                               }
                               if (index == courtProvider.allCourts.length) {
@@ -137,11 +115,13 @@ class _CourtResultScreenState extends State<CourtResultScreen> {
                       padding: const EdgeInsets.all(5.0),
                       child: InkWell(
                         onTap: () {
-                          courtProvider.scrollController.animateTo(0,
-                              duration: const Duration(
-                                seconds: 2,
-                              ),
-                              curve: Curves.easeInOut);
+                          courtProvider.scrollController.animateTo(
+                            0,
+                            duration: const Duration(
+                              seconds: 2,
+                            ),
+                            curve: Curves.easeInOut,
+                          );
                         },
                         child: SvgPicture.asset(
                           AssetsManager.iconify("arrow-up"),
@@ -163,5 +143,48 @@ class _CourtResultScreenState extends State<CourtResultScreen> {
   void dispose() {
     Provider.of<CourtProvider>(context).dispose();
     super.dispose();
+  }
+}
+
+class CourtCard extends StatelessWidget {
+  final Court court;
+  const CourtCard({
+    super.key,
+    required this.court,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+          topLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
+        color: QColors.primaryColor.withOpacity(.3),
+      ),
+      child: Column(
+        children: [
+          Text(
+            court.principle,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            court.groundAppeal,
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
