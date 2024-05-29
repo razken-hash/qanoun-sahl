@@ -5,7 +5,7 @@ import 'package:qanoun_sahl/views/core/chat/chat_screen.dart';
 import 'package:qanoun_sahl/views/core/drawer/q_drawer.dart';
 import 'package:qanoun_sahl/views/core/home/home_screen.dart';
 import 'package:qanoun_sahl/views/core/home/court/court_result_screen.dart';
-import 'package:qanoun_sahl/views/core/home/journal/journal_provider.dart';
+import 'package:qanoun_sahl/views/core/home/law/law_provider.dart';
 import 'package:qanoun_sahl/views/core/notifications/notifications_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 import 'package:qanoun_sahl/views/widgets/circle_button.dart';

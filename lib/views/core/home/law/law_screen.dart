@@ -4,19 +4,21 @@ import 'package:provider/provider.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/core/home/court/court_result_screen.dart';
+import 'package:qanoun_sahl/views/core/home/law/law_provider.dart';
+import 'package:qanoun_sahl/views/core/home/law/law_result_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class JournalScreen extends StatelessWidget {
-  JournalScreen({super.key});
+class LawScreen extends StatelessWidget {
+  LawScreen({super.key});
 
-  TextEditingController searchController = TextEditingController(),
-      publichBeginDateController = TextEditingController(),
+  final TextEditingController searchController = TextEditingController(),
+      publishBeginDateController = TextEditingController(),
       publishEndDateController = TextEditingController(),
       signBeginDateController = TextEditingController(),
       signEndDateController = TextEditingController(),
       numberController = TextEditingController(),
       typeController = TextEditingController(),
-      domainController = TextEditingController(),
+      fieldController = TextEditingController(),
       ministryController = TextEditingController();
 
   @override
@@ -103,7 +105,7 @@ class JournalScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width - 120,
                         height: 70,
                         child: TextFormField(
-                          controller: publichBeginDateController,
+                          controller: publishBeginDateController,
                           decoration: InputDecoration(
                             labelText: "2000/01/01",
                             labelStyle: const TextStyle(
@@ -387,7 +389,7 @@ class JournalScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width - 120,
                         height: 70,
                         child: TextFormField(
-                          controller: domainController,
+                          controller: fieldController,
                           decoration: InputDecoration(
                             labelText: "العدل",
                             labelStyle: const TextStyle(
@@ -450,7 +452,22 @@ class JournalScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  naviagtionProvider.saveAndGoto(const CourtResultScreen());
+                  naviagtionProvider.saveAndGoto(
+                    ChangeNotifierProvider(
+                      create: (context) => LawProvider(
+                        searchQuery: searchController.text,
+                        ministry: ministryController.text,
+                        textNumber: numberController.text,
+                        textType: typeController.text,
+                        journalStartDate: publishBeginDateController.text,
+                        journalEndDate: publishEndDateController.text,
+                        signatureStartDate: signBeginDateController.text,
+                        signatureEndDate: signEndDateController.text,
+                        field: fieldController.text,
+                      ),
+                      child: const LawResultScreen(),
+                    ),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
