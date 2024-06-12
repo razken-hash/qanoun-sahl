@@ -12,6 +12,8 @@ class CourtProvider extends ChangeNotifier {
 
   String? searchQuery, decisionSubject, startDate, endDate, decisionNumber;
 
+  bool keepLoading = false;
+
   CourtProvider({
     this.searchQuery,
     this.decisionSubject,
@@ -19,6 +21,7 @@ class CourtProvider extends ChangeNotifier {
     this.endDate,
     this.decisionNumber,
   }) {
+    keepLoading = false;
     allMahkama = [];
     getCourts(page: page++);
     scrollController.addListener(() {
@@ -36,7 +39,7 @@ class CourtProvider extends ChangeNotifier {
   void getCourts({int page = 1}) async {
     isLoading = true;
     log(searchQuery.toString());
-    List<Mahkama> courts = await MahkamaService.getCourts(
+    final data = await MahkamaService.getCourts(
       searchQuery: searchQuery ?? "",
       decisionSubject: decisionSubject ?? "",
       startDate: startDate ?? "",
@@ -45,8 +48,10 @@ class CourtProvider extends ChangeNotifier {
       perPage: perPage,
       page: page,
     );
-    allMahkama.addAll(courts);
+    allMahkama.addAll(data["data"]);
+
     isLoading = false;
+    keepLoading = data["hasMore"] as bool;
     notifyListeners();
   }
 }

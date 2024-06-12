@@ -9,7 +9,7 @@ class DostorProvider extends ChangeNotifier {
 
   int page = 1;
   final int perPage = 10;
-
+  bool keepLoading = false;
   String? searchQuery,
       sectionNumber,
       sectionName,
@@ -25,6 +25,7 @@ class DostorProvider extends ChangeNotifier {
     this.chapterName,
     this.articleNumber,
   }) {
+    keepLoading = false;
     allDostor = [];
     getConstitutions(page: page++);
     scrollController.addListener(() {
@@ -41,7 +42,7 @@ class DostorProvider extends ChangeNotifier {
 
   void getConstitutions({int page = 1}) async {
     isLoading = true;
-    List<Dostor> constitutions = await DostorService.getConstitutions(
+    final data = await DostorService.getConstitutions(
       searchQuery: searchQuery ?? "",
       articleNumber: articleNumber ?? "",
       chapterNumber: chapterNumber ?? "",
@@ -51,9 +52,9 @@ class DostorProvider extends ChangeNotifier {
       perPage: perPage,
       page: page,
     );
-    log(constitutions.toString());
-    allDostor.addAll(constitutions);
+    allDostor.addAll(data["data"]);
     isLoading = false;
+    keepLoading = data["hasMore"] as bool;
     notifyListeners();
   }
 }

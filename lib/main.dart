@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qanoun_sahl/models/dostor.dart';
 import 'package:qanoun_sahl/models/user.dart';
+import 'package:qanoun_sahl/providers/dostor_search_provider.dart';
+import 'package:qanoun_sahl/providers/home_provider.dart';
+import 'package:qanoun_sahl/providers/mahkama_search_provider.dart';
+import 'package:qanoun_sahl/providers/qadaa_search_provider.dart';
 import 'package:qanoun_sahl/services/auth_service.dart';
 import 'package:qanoun_sahl/services/local_storage_service.dart';
 import 'package:qanoun_sahl/views/auth/auth_provider.dart';
-import 'package:qanoun_sahl/views/auth/login_screen.dart';
-import 'package:qanoun_sahl/views/auth/register_screen.dart';
-import 'package:qanoun_sahl/views/core/home/madjalla/law_provider.dart';
 import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
 import 'package:qanoun_sahl/views/on_boarding/on_boarding_screen.dart';
-import 'package:qanoun_sahl/views/themes/q_colors.dart';
 import 'package:qanoun_sahl/views/themes/themes.dart';
 
 void main() {
@@ -32,6 +33,18 @@ class QanounSahlApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<MahkamaSearchProvider>(
+          create: (context) => MahkamaSearchProvider(),
+        ),
+        ChangeNotifierProvider<QadaaSearchProvider>(
+          create: (context) => QadaaSearchProvider(),
+        ),
+        ChangeNotifierProvider<DostorSearchProvider>(
+          create: (context) => DostorSearchProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,29 +1,28 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:qanoun_sahl/models/mahkama.dart';
+import 'package:qanoun_sahl/models/qadaa.dart';
+import 'package:qanoun_sahl/models/qadaa.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
-import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_detail_screen.dart';
-import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_provider.dart';
+import 'package:qanoun_sahl/views/core/home/qadaa/qadaa_provider.dart';
+import 'package:qanoun_sahl/views/core/home/qadaa/qadaa_detail_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class MahkamaResultScreen extends StatefulWidget {
-  const MahkamaResultScreen({super.key});
+class QadaaResultScreen extends StatefulWidget {
+  const QadaaResultScreen({super.key});
 
   @override
-  State<MahkamaResultScreen> createState() => _MahkamaResultScreenState();
+  State<QadaaResultScreen> createState() => _QadaaResultScreenState();
 }
 
-class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
+class _QadaaResultScreenState extends State<QadaaResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<NavigationProvider>(
       builder: (context, naviagtionProvider, child) {
-        return Consumer<CourtProvider>(
-          builder: (context, courtProvider, child) {
+        return Consumer<QadaaProvider>(
+          builder: (context, conseilProvider, child) {
             return Expanded(
               child: Stack(
                 children: [
@@ -77,23 +76,26 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            controller: courtProvider.scrollController,
-                            itemCount: courtProvider.allMahkama.length + 1,
+                            controller: conseilProvider.scrollController,
+                            itemCount: conseilProvider.allConseils.length + 1,
                             itemBuilder: (context, index) {
-                              if (index < courtProvider.allMahkama.length) {
+                              if (index < conseilProvider.allConseils.length) {
                                 return InkWell(
                                   onTap: () {
-                                    naviagtionProvider
-                                        .saveAndGoto(CourtDetailScreen(
-                                      court: courtProvider.allMahkama[index],
-                                    ));
+                                    naviagtionProvider.saveAndGoto(
+                                      QadaaDetailScreen(
+                                        qadaa:
+                                            conseilProvider.allConseils[index],
+                                      ),
+                                    );
                                   },
-                                  child: CourtCard(
-                                      court: courtProvider.allMahkama[index]),
+                                  child: QadaaCard(
+                                      conseil:
+                                          conseilProvider.allConseils[index]),
                                 );
                               }
-                              if (index == courtProvider.allMahkama.length &&
-                                  courtProvider.keepLoading) {
+                              if (index == conseilProvider.allConseils.length &&
+                                  conseilProvider.keepLoading) {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );
@@ -118,7 +120,7 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
                       padding: const EdgeInsets.all(5.0),
                       child: InkWell(
                         onTap: () {
-                          courtProvider.scrollController.animateTo(
+                          conseilProvider.scrollController.animateTo(
                             0,
                             duration: const Duration(
                               seconds: 2,
@@ -144,16 +146,16 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
 
   @override
   void dispose() {
-    Provider.of<CourtProvider>(context).dispose();
+    Provider.of<QadaaProvider>(context).dispose();
     super.dispose();
   }
 }
 
-class CourtCard extends StatelessWidget {
-  final Mahkama court;
-  const CourtCard({
+class QadaaCard extends StatelessWidget {
+  final Qadaa conseil;
+  const QadaaCard({
     super.key,
-    required this.court,
+    required this.conseil,
   });
 
   @override
@@ -173,20 +175,14 @@ class CourtCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "${court.principle.substring(
-              0,
-              min(court.principle.length, 120),
-            )}${min(court.principle.length, 120) < 120 ? "" : "..."}",
+            conseil.principle,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
           ),
           Text(
-            "${court.groundAppeal.substring(
-              0,
-              min(court.groundAppeal.length, 200),
-            )}${min(court.groundAppeal.length, 200) < 200 ? "" : "..."}",
+            conseil.chamber,
             style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 13,

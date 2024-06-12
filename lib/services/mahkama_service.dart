@@ -6,7 +6,7 @@ import 'package:qanoun_sahl/consts.dart';
 import 'package:qanoun_sahl/models/mahkama.dart';
 
 class MahkamaService {
-  static Future<List<Mahkama>> getCourts({
+  static Future<Map<String, dynamic>> getCourts({
     String searchQuery = "",
     String decisionSubject = "",
     String startDate = "",
@@ -15,6 +15,7 @@ class MahkamaService {
     int perPage = 10,
     int page = 1,
   }) async {
+    bool hasMore = false;
     List<Mahkama> courts = [];
     String url =
         "$BASE_URL/supreme-court/search?${searchQuery != "" ? "search_query=$searchQuery" : ""}${decisionNumber != "" ? "&decision_number=$decisionNumber" : ""}${decisionSubject != "" ? "&decision_subject=$decisionSubject" : ""}${startDate != "" ? "&start_date=$startDate" : ""}${endDate != "" ? "&end_date=$endDate" : ""}&page=$page&per_page=$perPage";
@@ -27,11 +28,12 @@ class MahkamaService {
     });
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
+      hasMore = decodedResponse["has_more"];
       for (var item in decodedResponse['data']) {
         courts.add(Mahkama.fromMap(item));
       }
     }
-    return courts;
+    return {"hasMore": hasMore, "data": courts};
   }
 }
 

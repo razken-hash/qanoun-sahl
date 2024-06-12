@@ -94,7 +94,8 @@ class _DostorResultScreenState extends State<DostorResultScreen> {
                                       dostor: dostorProvider.allDostor[index]),
                                 );
                               }
-                              if (index == dostorProvider.allDostor.length) {
+                              if (index == dostorProvider.allDostor.length &&
+                                  dostorProvider.keepLoading) {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );

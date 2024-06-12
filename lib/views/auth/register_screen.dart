@@ -232,6 +232,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             "حصل خطأ، يرجي المحاولة مرة أخرى")),
                                   );
                                 } else {
+                                  while (Navigator.canPop(context)) {
+                                    Navigator.pop(context);
+                                  }
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

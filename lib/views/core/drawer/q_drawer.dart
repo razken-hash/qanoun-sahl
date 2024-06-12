@@ -111,7 +111,7 @@ class _QDrawerState extends State<QDrawer> {
                       icon: "home",
                       onTap: () {
                         widget.onClick;
-                        naviagtionProvider.goto(const HomeScreen());
+                        naviagtionProvider.goto(HomeScreen());
                       },
                     ),
                     const Divider(

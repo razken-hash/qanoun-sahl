@@ -4,26 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:qanoun_sahl/models/mahkama.dart';
+import 'package:qanoun_sahl/models/djarida.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_detail_screen.dart';
 import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_provider.dart';
+import 'package:qanoun_sahl/views/core/home/djarida/djarida_detail_screen.dart';
+import 'package:qanoun_sahl/views/core/home/djarida/djarida_provider.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
-class MahkamaResultScreen extends StatefulWidget {
-  const MahkamaResultScreen({super.key});
+class DjaridaResultScreen extends StatefulWidget {
+  const DjaridaResultScreen({super.key});
 
   @override
-  State<MahkamaResultScreen> createState() => _MahkamaResultScreenState();
+  State<DjaridaResultScreen> createState() => _DjaridaResultScreenState();
 }
 
-class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
+class _DjaridaResultScreenState extends State<DjaridaResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<NavigationProvider>(
       builder: (context, naviagtionProvider, child) {
-        return Consumer<CourtProvider>(
-          builder: (context, courtProvider, child) {
+        return Consumer<DjaridaProvider>(
+          builder: (context, djaridaProvider, child) {
             return Expanded(
               child: Stack(
                 children: [
@@ -77,23 +80,25 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            controller: courtProvider.scrollController,
-                            itemCount: courtProvider.allMahkama.length + 1,
+                            controller: djaridaProvider.scrollController,
+                            itemCount: djaridaProvider.allDjarida.length + 1,
                             itemBuilder: (context, index) {
-                              if (index < courtProvider.allMahkama.length) {
+                              if (index < djaridaProvider.allDjarida.length) {
                                 return InkWell(
                                   onTap: () {
-                                    naviagtionProvider
-                                        .saveAndGoto(CourtDetailScreen(
-                                      court: courtProvider.allMahkama[index],
-                                    ));
+                                    naviagtionProvider.saveAndGoto(
+                                      DjaridaDetailScreen(
+                                        law: djaridaProvider.allDjarida[index],
+                                      ),
+                                    );
                                   },
-                                  child: CourtCard(
-                                      court: courtProvider.allMahkama[index]),
+                                  child: DjaridaCard(
+                                      djarida:
+                                          djaridaProvider.allDjarida[index]),
                                 );
                               }
-                              if (index == courtProvider.allMahkama.length &&
-                                  courtProvider.keepLoading) {
+                              if (index == djaridaProvider.allDjarida.length &&
+                                  djaridaProvider.keepLoading) {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );
@@ -118,7 +123,7 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
                       padding: const EdgeInsets.all(5.0),
                       child: InkWell(
                         onTap: () {
-                          courtProvider.scrollController.animateTo(
+                          djaridaProvider.scrollController.animateTo(
                             0,
                             duration: const Duration(
                               seconds: 2,
@@ -144,16 +149,16 @@ class _MahkamaResultScreenState extends State<MahkamaResultScreen> {
 
   @override
   void dispose() {
-    Provider.of<CourtProvider>(context).dispose();
+    Provider.of<DjaridaProvider>(context).dispose();
     super.dispose();
   }
 }
 
-class CourtCard extends StatelessWidget {
-  final Mahkama court;
-  const CourtCard({
+class DjaridaCard extends StatelessWidget {
+  final Djarida djarida;
+  const DjaridaCard({
     super.key,
-    required this.court,
+    required this.djarida,
   });
 
   @override
@@ -173,23 +178,20 @@ class CourtCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "${court.principle.substring(
-              0,
-              min(court.principle.length, 120),
-            )}${min(court.principle.length, 120) < 120 ? "" : "..."}",
+            "${djarida.textType} ${djarida.textType == "" ? "" : "صادر عن ${djarida.ministry}"}",
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
           ),
           Text(
-            "${court.groundAppeal.substring(
-              0,
-              min(court.groundAppeal.length, 200),
-            )}${min(court.groundAppeal.length, 200) < 200 ? "" : "..."}",
+            "${djarida.content.substring(
+              min(djarida.content.indexOf("\n") + 1, 1),
+              min(djarida.content.length, 200),
+            )}${min(djarida.content.length, 200) < 200 ? "" : "..."}",
             style: const TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
             ),
           ),
         ],

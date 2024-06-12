@@ -196,6 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               "حصل خطأ، يرجي المحاولة مرة أخرى")),
                                     );
                                   } else {
+                                    while (Navigator.canPop(context)) {
+                                      Navigator.pop(context);
+                                    }
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
