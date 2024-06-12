@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Court {
+class Mahkama {
   final int number;
   final String subject;
   final String reference;
@@ -14,7 +14,7 @@ class Court {
   final String response;
   final List<String> keywords;
 
-  Court({
+  Mahkama({
     required this.number,
     required this.subject,
     required this.reference,
@@ -29,7 +29,7 @@ class Court {
     required this.keywords,
   });
 
-  Court copyWith({
+  Mahkama copyWith({
     int? number,
     String? subject,
     String? reference,
@@ -43,7 +43,7 @@ class Court {
     String? response,
     List<String>? keywords,
   }) {
-    return Court(
+    return Mahkama(
       number: number ?? this.number,
       subject: subject ?? this.subject,
       reference: reference ?? this.reference,
@@ -76,8 +76,8 @@ class Court {
     };
   }
 
-  factory Court.fromMap(Map<String, dynamic> map) {
-    return Court(
+  factory Mahkama.fromMap(Map<String, dynamic> map) {
+    return Mahkama(
       number: map['number'] as int,
       subject: map['subject'] ?? "",
       reference: map['reference'] ?? "",
@@ -95,8 +95,8 @@ class Court {
 
   String toJson() => json.encode(toMap());
 
-  factory Court.fromJson(String source) =>
-      Court.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Mahkama.fromJson(String source) =>
+      Mahkama.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

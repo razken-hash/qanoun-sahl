@@ -6,7 +6,7 @@ import 'package:qanoun_sahl/services/local_storage_service.dart';
 import 'package:qanoun_sahl/views/auth/auth_provider.dart';
 import 'package:qanoun_sahl/views/auth/login_screen.dart';
 import 'package:qanoun_sahl/views/auth/register_screen.dart';
-import 'package:qanoun_sahl/views/core/home/law/law_provider.dart';
+import 'package:qanoun_sahl/views/core/home/madjalla/law_provider.dart';
 import 'package:qanoun_sahl/views/core/qanoun_sahl_screen.dart';
 import 'package:qanoun_sahl/views/on_boarding/on_boarding_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';

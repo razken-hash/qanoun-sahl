@@ -45,6 +45,7 @@ class AuthService {
     required String password,
   }) async {
     try {
+      log("HII");
       final response = await http.post(
         Uri.parse("$BASE_URL/auth/register"),
         headers: {

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:qanoun_sahl/consts.dart';
-import 'package:qanoun_sahl/models/Conseil.dart';
+import 'package:qanoun_sahl/models/conseil.dart';
 
 class ConseilService {
   static Future<List<Conseil>> getConseils({
