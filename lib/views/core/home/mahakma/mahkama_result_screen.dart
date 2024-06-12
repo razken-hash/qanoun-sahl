@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:qanoun_sahl/models/court.dart';
+import 'package:qanoun_sahl/models/mahkama.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
 import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_detail_screen.dart';
@@ -175,7 +175,7 @@ class CourtCard extends StatelessWidget {
             "${court.principle.substring(
               0,
               min(court.principle.length, 120),
-            )}...",
+            )}${min(court.principle.length, 120) < 120 ? "" : "..."}",
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,
@@ -185,7 +185,7 @@ class CourtCard extends StatelessWidget {
             "${court.groundAppeal.substring(
               0,
               min(court.groundAppeal.length, 200),
-            )}...",
+            )}${min(court.groundAppeal.length, 200) < 200 ? "" : "..."}",
             style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 13,

@@ -1,7 +1,7 @@
 import "dart:developer";
 
 import "package:flutter/material.dart";
-import 'package:qanoun_sahl/models/court.dart';
+import 'package:qanoun_sahl/models/mahkama.dart';
 import "package:qanoun_sahl/services/mahkama_service.dart";
 
 class CourtProvider extends ChangeNotifier {

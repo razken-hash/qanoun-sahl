@@ -25,7 +25,7 @@ class DostorService {
     });
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
-      log(decodedResponse);
+      log(decodedResponse['data'].toString());
       for (var item in decodedResponse['data']) {
         constitutions.add(Dostor.fromMap(item));
       }

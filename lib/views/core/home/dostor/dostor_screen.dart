@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/views/core/home/dostor/dostor_provider.dart';
 import 'package:qanoun_sahl/views/core/home/dostor/dostor_result_screen.dart';
-import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
-import 'package:qanoun_sahl/views/core/home/mahakma/mahkama_result_screen.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
 
 class DostorScreen extends StatefulWidget {
@@ -17,12 +15,12 @@ class DostorScreen extends StatefulWidget {
 }
 
 class _DostorScreenState extends State<DostorScreen> {
-  TextEditingController searchController = TextEditingController(text: "جناية"),
+  TextEditingController searchController = TextEditingController(),
       sectionNumberController = TextEditingController(),
       sectionNameController = TextEditingController(),
       chapterNumberController = TextEditingController(),
       chapterNameController = TextEditingController(),
-      articleNameController = TextEditingController();
+      articleNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +97,7 @@ class _DostorScreenState extends State<DostorScreen> {
                         width: MediaQuery.of(context).size.width - 160,
                         height: 70,
                         child: TextFormField(
-                          controller: chapterNumberController,
+                          controller: sectionNumberController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             labelText: "مثلا 1234",
@@ -253,7 +251,7 @@ class _DostorScreenState extends State<DostorScreen> {
                         width: MediaQuery.of(context).size.width - 160,
                         height: 70,
                         child: TextFormField(
-                          controller: articleNameController,
+                          controller: articleNumberController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             labelText: "مثلا 1234",
@@ -277,7 +275,7 @@ class _DostorScreenState extends State<DostorScreen> {
                         sectionName: sectionNameController.text,
                         chapterNumber: chapterNumberController.text,
                         chapterName: chapterNameController.text,
-                        articleNumber: articleNameController.text,
+                        articleNumber: articleNumberController.text,
                       ),
                       child: const DostorResultScreen(),
                     ),

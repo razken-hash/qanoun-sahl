@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:qanoun_sahl/consts.dart';
-import 'package:qanoun_sahl/models/court.dart';
+import 'package:qanoun_sahl/models/mahkama.dart';
 
 class MahkamaService {
   static Future<List<Mahkama>> getCourts({
@@ -34,6 +34,8 @@ class MahkamaService {
     return courts;
   }
 }
+
+
 
 
 //${searchQuery != null ? "&search_query=$searchQuery" : ""}

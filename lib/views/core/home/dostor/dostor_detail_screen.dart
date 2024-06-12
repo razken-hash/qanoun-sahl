@@ -75,76 +75,81 @@ class DostorDetailScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "القرار رقم ${constitution.number} المؤرخ في ${constitution.date}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "المبدأ:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Text(constitution.principle),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "رد المحكمة العليا عن الوجه المرتبط بالمبدأ:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Text(constitution.chamber),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "منطوق القرار:",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Text(constitution.date),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Text(
-                            "الرئيس:",
-                            style: TextStyle(
+                      RichText(
+                        text: TextSpan(
+                          text: "القسم ${constitution.sectionNumber}: ",
+                          style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 17,
+                              color: QColors.blackColor,
+                              fontFamily: "ElMessiri"),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: constitution.sectionName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(constitution.pdfLink.isNotEmpty
-                              ? constitution.pdfLink
-                              : "/"),
-                        ],
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Text(
-                            "المستشار المقرر:",
-                            style: TextStyle(
+                      RichText(
+                        text: TextSpan(
+                          text: "الفصل ${constitution.chapterNumber}: ",
+                          style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 17,
+                              color: QColors.blackColor,
+                              fontFamily: "ElMessiri"),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: constitution.chapterName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(constitution.principle.isNotEmpty
-                              ? constitution.principle
-                              : "/"),
-                        ],
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "رقم المادة: ",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17,
+                              color: QColors.blackColor,
+                              fontFamily: "ElMessiri"),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "${constitution.articleNumber}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "نص المادة: ",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17,
+                              color: QColors.blackColor,
+                              fontFamily: "ElMessiri"),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: constitution.articleText,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 10),
                     ],

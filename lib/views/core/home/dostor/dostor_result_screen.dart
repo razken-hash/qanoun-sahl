@@ -1,14 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:qanoun_sahl/models/conseil.dart';
-import 'package:qanoun_sahl/models/conseil.dart';
 import 'package:qanoun_sahl/models/dostor.dart';
 import 'package:qanoun_sahl/providers/navigation_provider.dart';
 import 'package:qanoun_sahl/utils/assets_manager.dart';
-import 'package:qanoun_sahl/views/core/home/qadaa/conseil_provider.dart';
-import 'package:qanoun_sahl/views/core/home/qadaa/conseil_detail_screen.dart';
-import 'package:qanoun_sahl/views/core/home/qadaa/conseil_provider.dart';
 import 'package:qanoun_sahl/views/core/home/dostor/dostor_detail_screen.dart';
 import 'package:qanoun_sahl/views/core/home/dostor/dostor_provider.dart';
 import 'package:qanoun_sahl/views/themes/q_colors.dart';
@@ -26,7 +23,7 @@ class _DostorResultScreenState extends State<DostorResultScreen> {
     return Consumer<NavigationProvider>(
       builder: (context, naviagtionProvider, child) {
         return Consumer<DostorProvider>(
-          builder: (context, constitutionProvider, child) {
+          builder: (context, dostorProvider, child) {
             return Expanded(
               child: Stack(
                 children: [
@@ -80,28 +77,24 @@ class _DostorResultScreenState extends State<DostorResultScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            controller: constitutionProvider.scrollController,
-                            itemCount:
-                                constitutionProvider.allDostor.length + 1,
+                            controller: dostorProvider.scrollController,
+                            itemCount: dostorProvider.allDostor.length + 1,
                             itemBuilder: (context, index) {
-                              if (index <
-                                  constitutionProvider.allDostor.length) {
+                              if (index < dostorProvider.allDostor.length) {
                                 return InkWell(
                                   onTap: () {
                                     naviagtionProvider.saveAndGoto(
                                       DostorDetailScreen(
-                                        constitution: constitutionProvider
-                                            .allDostor[index],
+                                        constitution:
+                                            dostorProvider.allDostor[index],
                                       ),
                                     );
                                   },
-                                  child: ConstitutionCard(
-                                      constitution: constitutionProvider
-                                          .allDostor[index]),
+                                  child: DostorCard(
+                                      dostor: dostorProvider.allDostor[index]),
                                 );
                               }
-                              if (index ==
-                                  constitutionProvider.allDostor.length) {
+                              if (index == dostorProvider.allDostor.length) {
                                 return const Center(
                                   child: CircularProgressIndicator(),
                                 );
@@ -126,7 +119,7 @@ class _DostorResultScreenState extends State<DostorResultScreen> {
                       padding: const EdgeInsets.all(5.0),
                       child: InkWell(
                         onTap: () {
-                          constitutionProvider.scrollController.animateTo(
+                          dostorProvider.scrollController.animateTo(
                             0,
                             duration: const Duration(
                               seconds: 2,
@@ -157,11 +150,11 @@ class _DostorResultScreenState extends State<DostorResultScreen> {
   }
 }
 
-class ConstitutionCard extends StatelessWidget {
-  final Dostor constitution;
-  const ConstitutionCard({
+class DostorCard extends StatelessWidget {
+  final Dostor dostor;
+  const DostorCard({
     super.key,
-    required this.constitution,
+    required this.dostor,
   });
 
   @override
@@ -179,16 +172,23 @@ class ConstitutionCard extends StatelessWidget {
         color: QColors.primaryColor.withOpacity(.3),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            constitution.principle,
+            "${dostor.chapterName.substring(
+              0,
+              min(dostor.chapterName.length, 120),
+            )}${min(dostor.chapterName.length, 120) < 120 ? "" : "..."}",
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
           ),
           Text(
-            constitution.principle,
+            "${dostor.articleText.substring(
+              min(dostor.articleText.indexOf("\n") + 1, 1),
+              min(dostor.articleText.length, 200),
+            )}${min(dostor.articleText.length, 200) < 200 ? "" : "..."}",
             style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 13,

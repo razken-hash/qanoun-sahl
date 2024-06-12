@@ -3,75 +3,63 @@ import 'dart:convert';
 
 class Dostor {
   final String id;
-  final String number;
-  final String chamber;
-  final String section;
-  final String procedure;
-  final String date;
-  final String subject;
-  final String principle;
-  final String pdfLink;
+  final int sectionNumber;
+  final String sectionName;
+  final int chapterNumber;
+  final String chapterName;
+  final int articleNumber;
+  final String articleText;
   Dostor({
     required this.id,
-    required this.number,
-    required this.chamber,
-    required this.section,
-    required this.procedure,
-    required this.date,
-    required this.subject,
-    required this.principle,
-    required this.pdfLink,
+    required this.sectionNumber,
+    required this.sectionName,
+    required this.chapterNumber,
+    required this.chapterName,
+    required this.articleNumber,
+    required this.articleText,
   });
 
   Dostor copyWith({
     String? id,
-    String? number,
-    String? chamber,
-    String? section,
-    String? procedure,
-    String? date,
-    String? subject,
-    String? principle,
-    String? pdfLink,
+    int? sectionNumber,
+    String? sectionName,
+    int? chapterNumber,
+    String? chapterName,
+    int? articleNumber,
+    String? articleText,
   }) {
     return Dostor(
       id: id ?? this.id,
-      number: number ?? this.number,
-      chamber: chamber ?? this.chamber,
-      section: section ?? this.section,
-      procedure: procedure ?? this.procedure,
-      date: date ?? this.date,
-      subject: subject ?? this.subject,
-      principle: principle ?? this.principle,
-      pdfLink: pdfLink ?? this.pdfLink,
+      sectionNumber: sectionNumber ?? this.sectionNumber,
+      sectionName: sectionName ?? this.sectionName,
+      chapterNumber: chapterNumber ?? this.chapterNumber,
+      chapterName: chapterName ?? this.chapterName,
+      articleNumber: articleNumber ?? this.articleNumber,
+      articleText: articleText ?? this.articleText,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      '_id': id,
-      'number': number,
-      'chamber': chamber,
-      'section': section,
-      'procedure': procedure,
-      'date': date,
-      'subject': subject,
-      'principle': principle,
-      'pdf_link': pdfLink,
+      'id': id,
+      'section_number': sectionNumber,
+      'section_name': sectionName,
+      'chapter_number': chapterNumber,
+      'chapter_name': chapterName,
+      'article_number': articleNumber,
+      'article_text': articleText,
     };
   }
 
   factory Dostor.fromMap(Map<String, dynamic> map) {
     return Dostor(
-      id: map['_id'] as String,
-      number: map['number'] as String,
-      chamber: map['chamber'] as String,
-      section: map['section'] as String,
-      procedure: map['procedure'] as String,
-      date: map['date'] as String,
-      subject: map['subject'] as String,
-      principle: map['principle'] as String,
-      pdfLink: map['pdf_link'] as String,
+      id: map['_id'] ?? "",
+      sectionNumber: (map['section_number'] ?? -1) + 1,
+      sectionName: map['section_name'] ?? "",
+      chapterNumber: (map['chapter_number'] ?? -1) + 1,
+      chapterName: map['chapter_name'] ?? "",
+      articleNumber: (map['article_number'] ?? -1) + 1,
+      articleText: map['article_text'] ?? "",
     );
   }
 
@@ -82,7 +70,7 @@ class Dostor {
 
   @override
   String toString() {
-    return 'Constitution(id: $id, number: $number, chamber: $chamber, section: $section, procedure: $procedure, date: $date, subject: $subject, principle: $principle, pdfLink: $pdfLink)';
+    return 'Dostor(id: $id, section_number: $sectionNumber, section_name: $sectionName, chapter_number: $chapterNumber, chapter_name: $chapterName, article_number: $articleNumber, article_text: $articleText)';
   }
 
   @override
@@ -90,26 +78,22 @@ class Dostor {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.number == number &&
-        other.chamber == chamber &&
-        other.section == section &&
-        other.procedure == procedure &&
-        other.date == date &&
-        other.subject == subject &&
-        other.principle == principle &&
-        other.pdfLink == pdfLink;
+        other.sectionNumber == sectionNumber &&
+        other.sectionName == sectionName &&
+        other.chapterNumber == chapterNumber &&
+        other.chapterName == chapterName &&
+        other.articleNumber == articleNumber &&
+        other.articleText == articleText;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        number.hashCode ^
-        chamber.hashCode ^
-        section.hashCode ^
-        procedure.hashCode ^
-        date.hashCode ^
-        subject.hashCode ^
-        principle.hashCode ^
-        pdfLink.hashCode;
+        sectionNumber.hashCode ^
+        sectionName.hashCode ^
+        chapterNumber.hashCode ^
+        chapterName.hashCode ^
+        articleNumber.hashCode ^
+        articleText.hashCode;
   }
 }
