@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qanoun_sahl/models/dostor.dart';
 import 'package:qanoun_sahl/models/user.dart';
+import 'package:qanoun_sahl/providers/djarida_search_provider.dart';
 import 'package:qanoun_sahl/providers/dostor_search_provider.dart';
 import 'package:qanoun_sahl/providers/home_provider.dart';
 import 'package:qanoun_sahl/providers/mahkama_search_provider.dart';
@@ -45,6 +46,9 @@ class QanounSahlApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<DostorSearchProvider>(
           create: (context) => DostorSearchProvider(),
+        ),
+        ChangeNotifierProvider<DjaridaSearchProvider>(
+          create: (context) => DjaridaSearchProvider(),
         ),
       ],
       child: MaterialApp(

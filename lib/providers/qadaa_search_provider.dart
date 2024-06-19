@@ -39,6 +39,9 @@ class QadaaSearchProvider extends ChangeNotifier {
     );
     if (picked != null) {
       beginDateController.text = formatQadaaDate(picked);
+    } else {
+      beginDateController.text = "";
+      notifyListeners();
     }
   }
 
@@ -56,6 +59,9 @@ class QadaaSearchProvider extends ChangeNotifier {
     );
     if (picked != null) {
       endDateController.text = formatQadaaDate(picked);
+    } else {
+      endDateController.text = "";
+      notifyListeners();
     }
   }
 }

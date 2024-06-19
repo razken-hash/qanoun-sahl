@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController =
-          TextEditingController(text: "hash@gmail.com"),
-      _passwordController = TextEditingController(text: "value1234");
+          TextEditingController(text: ""),
+      _passwordController = TextEditingController(text: "");
 
   final _formKey = GlobalKey<FormState>();
 
@@ -143,14 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: SvgPicture.asset(
-                                        showPassword
+                                        !showPassword
                                             ? AssetsManager.iconify("hide")
                                             : AssetsManager.iconify("show"),
                                       ),
                                     ),
                                   ),
                                 ),
-                                obscureText: showPassword,
+                                obscureText: !showPassword,
                               ),
                             ),
                             SizedBox(

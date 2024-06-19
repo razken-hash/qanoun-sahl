@@ -15,6 +15,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+  List<String> messages = [];
+  bool writing = false;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -42,7 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: List.generate(
-                    10,
+                    messages.length,
                     (index) => SizedBox(
                       width: double.infinity,
                       child: Column(
@@ -51,7 +53,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             : CrossAxisAlignment.end,
                         children: [
                           Container(
-                            alignment: Alignment.topLeft,
+                            alignment: index % 2 != 0
+                                ? Alignment.topLeft
+                                : Alignment.topRight,
                             margin: const EdgeInsets.symmetric(
                               vertical: 5,
                             ),
@@ -60,16 +64,18 @@ class _ChatScreenState extends State<ChatScreen> {
                             decoration: BoxDecoration(
                               color: QColors.primaryColor.withOpacity(.5),
                               borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(30),
-                                bottomLeft: Radius.circular(30),
+                                topRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
                                 topLeft: Radius.circular(5),
                                 bottomRight: Radius.circular(5),
                               ),
                             ),
-                            child: const Center(
-                              child: Text(
-                                "هذا نص تجريبي، عبارة عن سؤال في مجال القانون والأعمال الحرة المرتبطة بالبنوك؟",
-                              ),
+                            child: Text(
+                              messages[index],
+                              textAlign: index % 2 == 0
+                                  ? TextAlign.right
+                                  : TextAlign.left,
+                              // "هذا نص تجريبي، عبارة عن سؤال في مجال القانون والأعمال الحرة المرتبطة بالبنوك؟",
                             ),
                           ),
                         ],
@@ -86,7 +92,27 @@ class _ChatScreenState extends State<ChatScreen> {
                   width: 320,
                   height: 88,
                   child: TextFormField(
+                    onSaved: (v) {
+                      setState(() {
+                        writing = false;
+                      });
+                    },
+                    onEditingComplete: () {
+                      setState(() {
+                        writing = false;
+                      });
+                    },
+                    onFieldSubmitted: (v) {
+                      setState(() {
+                        writing = false;
+                      });
+                    },
                     controller: _messageController,
+                    onTap: () {
+                      setState(() {
+                        writing = true;
+                      });
+                    },
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -97,21 +123,45 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 20.0),
-                      labelText: "البريد الإلكتروني",
+                      labelText: "اكتب شيئا ما",
                       labelStyle: const TextStyle(
                         color: Colors.grey,
                       ),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: SvgPicture.asset(
-                          AssetsManager.iconify("send"),
-                          color: QColors.primaryColor,
+                      prefixIcon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            writing = false;
+                            messages.add(_messageController.text);
+                            _messageController.clear();
+                            messages.add(
+                              "...",
+                            );
+                          });
+                          Future.delayed(const Duration(seconds: 2))
+                              .then((value) {
+                            setState(() {
+                              messages.removeLast();
+                              messages.add(
+                                "هذا نص تجريبي، عبارة عن سؤال في مجال القانون والأعمال الحرة المرتبطة بالبنوك؟",
+                              );
+                            });
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SvgPicture.asset(
+                            AssetsManager.iconify("send"),
+                            color: QColors.primaryColor,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
+            ),
+            SizedBox(
+              height: writing ? 265 : 0,
             ),
           ],
         ),

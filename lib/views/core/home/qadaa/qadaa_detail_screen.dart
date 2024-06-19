@@ -231,18 +231,21 @@ class _QadaaDetailScreenState extends State<QadaaDetailScreen> {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: const PDF(
-                            fitEachPage: false,
-                            preventLinkNavigation: false,
-                            swipeHorizontal: true,
-                          ).fromUrl(
-                            widget.qadaa.pdfLink.replaceAll("\n", ""),
-                            // "http://math.univ-lyon1.fr/~ducloux/enseignement/maitrise/algebre/chap4.pdf",
-                            placeholder: (progress) => const Center(
-                              child: CircularProgressIndicator(),
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: const PDF(
+                              fitEachPage: false,
+                              preventLinkNavigation: false,
+                              swipeHorizontal: true,
+                            ).fromUrl(
+                              widget.qadaa.pdfLink.replaceAll("\n", ""),
+                              // "http://math.univ-lyon1.fr/~ducloux/enseignement/maitrise/algebre/chap4.pdf",
+                              placeholder: (progress) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (error) =>
+                                  Center(child: Text(error.toString())),
                             ),
-                            errorWidget: (error) =>
-                                Center(child: Text(error.toString())),
                           ),
                         ),
                       ),

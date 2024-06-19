@@ -17,10 +17,10 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _firstNameController =
-          TextEditingController(text: "kenni"),
-      _lastNameController = TextEditingController(text: "hash"),
-      _emailController = TextEditingController(text: "hash@gmail.com"),
-      _passwordController = TextEditingController(text: "value1234");
+          TextEditingController(text: ""),
+      _lastNameController = TextEditingController(text: ""),
+      _emailController = TextEditingController(text: ""),
+      _passwordController = TextEditingController(text: "");
   final _formKey = GlobalKey<FormState>();
 
   bool showPassword = false;
@@ -202,19 +202,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: SvgPicture.asset(
-                                      showPassword
+                                      !showPassword
                                           ? AssetsManager.iconify("hide")
                                           : AssetsManager.iconify("show"),
                                     ),
                                   ),
                                 ),
                               ),
-                              obscureText: showPassword,
+                              obscureText: !showPassword,
                             ),
                           ),
                           const SizedBox(
                             height: 40,
-                            width: double.infinity,
+                          ),
+                          const SizedBox(
+                            height: 1,
                           ),
                           TextButton(
                             onPressed: () async {

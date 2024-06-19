@@ -24,6 +24,9 @@ class MahkamaSearchProvider extends ChangeNotifier {
     if (picked != null) {
       beginDateController.text = formatMahkamaDate(picked);
       notifyListeners();
+    } else {
+      beginDateController.text = "";
+      notifyListeners();
     }
   }
 
@@ -41,6 +44,9 @@ class MahkamaSearchProvider extends ChangeNotifier {
     );
     if (picked != null) {
       endDateController.text = formatMahkamaDate(picked);
+      notifyListeners();
+    } else {
+      endDateController.text = "";
       notifyListeners();
     }
   }
